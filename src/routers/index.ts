@@ -1,7 +1,7 @@
 import express from 'express'; 
 import {response} from './response.routers';
 
-export function init(){
+export default () => {
     const app = express();
     
     app.get('/api', (request, response) => {

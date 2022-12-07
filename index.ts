@@ -1,3 +1,4 @@
-import { init } from "./src/routers";
+import { RevoAPI } from "./src";
 
-init()
+RevoAPI.routes.init()
+RevoAPI.database.init.createTableFromConfig()
