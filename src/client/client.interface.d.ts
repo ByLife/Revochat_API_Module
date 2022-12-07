@@ -1,6 +1,6 @@
 export interface UserInterface {
-    id: number;
-    nonce: number;
-    publicAddress: string;
-    username?: string;
+    token: number;
+    username: string;
+    created_at: Date;
+    last_connection: Date;
 }

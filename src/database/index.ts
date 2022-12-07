@@ -1,1 +1,2 @@
-export * from "./database.model"
+export * from "./default.database"
+export * from "./model.database"

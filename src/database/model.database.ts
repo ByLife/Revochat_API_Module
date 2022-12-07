@@ -1,9 +1,10 @@
 import { Database } from "sqlite3";
-import { I_Database_Table } from "./database.interface"
+import { I_Database_Table } from "./interface.database"
 import chalk from "chalk";
+import { UserInterface } from "../client/client.interface";
 const Config = require("./../config/config.json")
 
-export class DB_Manager {
+export class DB_Modal {
     protected db: Database;
     private db_name: string = Config.database_name ;
     constructor() {
