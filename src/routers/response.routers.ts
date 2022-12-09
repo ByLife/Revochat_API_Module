@@ -5,7 +5,7 @@ import express from "express"
 export const Intercept = { // Intercept the requests and responses and route them to the right function
     path: "/api",
     Errors : {
-        path: "*",
+        path: "/*",
         E404: {
             path: "",
             res: (response: express.Response | null): void => {

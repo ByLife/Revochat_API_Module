@@ -1,12 +1,13 @@
 import Routes from "./routers/"
-import { DB_Manager } from "./database/"
+import { DB_Modal } from "./database/"
+import { Routers } from "./routers/class.routers"
 
 export  var RevoAPI = {
     routes: {
-        init: Routes
+        init: new Routers()
     },
     database: {
-        init: new DB_Manager()
+        init: new DB_Modal()
     }
 }
 
