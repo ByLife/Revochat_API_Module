@@ -1,6 +1,6 @@
 import express from "express"
 import Emitter from "../client/client.emitter"
-
+import {InterceptRoute, RouteResponse, Status} from "./"
 
 export const Intercept = { // Intercept the requests and responses and route them to the right function
     path: "/api",
@@ -15,10 +15,12 @@ export const Intercept = { // Intercept the requests and responses and route the
         Connect: {
             path:"/connect/:publicAddress",
             res: (req: express.Request, res: express.Response) : void => {
-                res.json({
-                    status: "success",
-                    message: `You are connect as ID: ${req.params.publicAddress}`
-                })
+                Emitter.emit("connect", req.params.publicAddress)
+                res.json(
+                    RouteResponse
+                        .setStatus(Status.success)
+                        .setMessage(`You are connect as ID: ${req.params.publicAddress}`)
+                )
             }
         },
 
@@ -28,10 +30,11 @@ export const Intercept = { // Intercept the requests and responses and route the
             path: "/channel/:token",
             res: (req: express.Request, res: express.Response): void => {
                 Emitter.emit("channel", req.params.token)
-                res.json({
-                    status: "success",
-                    message: `You are connect as ID: ${req.params.token}`
-                })
+                res.json(
+                    RouteResponse
+                        .setStatus(Status.success)
+                        .setMessage(`You are in the channel ID: ${req.params.token}`)
+                )
             }
         },
 
@@ -43,10 +46,11 @@ export const Intercept = { // Intercept the requests and responses and route the
                 path: "/send/:token",
                 res: (req: express.Request, res: express.Response): void => {
                     Emitter.emit("messages", req.params.token)
-                    res.json({
-                        status: "success",
-                        message: `You are connect as ID: ${req.params.token}`
-                    })
+                    res.json(
+                        RouteResponse
+                            .setStatus(Status.success)
+                            .setMessage(`You are sending a message to the user ID: ${req.params.token}`)
+                    )
                 },
             },
         },
@@ -61,11 +65,14 @@ export const Intercept = { // Intercept the requests and responses and route the
             res: (req: express.Request, response: express.Response | null): void => {
                 Emitter.emit("error", req.header('x-forwarded-for') || req.connection.remoteAddress)
                 response == null ? new Error("Unauthorized function manipulation") : 
-                response.json({
-                    status: "Error",
-                    message: "Not found"
-                })
+                response.json(
+                    RouteResponse
+                        .setStatus(Status.error)
+                        .setMessage("Unauthorized")
+                )
             }
         }
     }
+
+    
 }
