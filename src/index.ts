@@ -1,13 +1,19 @@
-import Routes from "./routers/"
-import { DB_Modal } from "./database/"
+import RevoDB from "./database/"
+import Client from "./client/client.emitter"
 import { Routers } from "./routers/class.routers"
 
-export  var RevoAPI = {
-    routes: new Routers(),
 
-    database: {
-        init: new DB_Modal()
-    }
+export * from "./database/"
+export * from "./routers/"
+export * from "./config/"
+
+export default Client
+
+export var RevoAPI = {
+    client: Client,
+    routes: new Routers(),
+    database: RevoDB
 }
 
+Client.emit("ready", RevoAPI)
 

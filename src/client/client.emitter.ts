@@ -1,9 +1,11 @@
-require('events').EventEmitter.prototype._maxListeners = 200;
-const { EventEmitter } = require('events');
+import { EventEmitter } from "events";
+import chalk from "chalk";
 
-import chalk from 'chalk';
+EventEmitter.defaultMaxListeners = 200;
 
-export default new class ClientEmitter extends EventEmitter {
+export interface ClientEvents extends ClientEmitter {}
+
+export class ClientEmitter extends EventEmitter {
     constructor() {
         super();
     }
@@ -23,5 +25,14 @@ export default new class ClientEmitter extends EventEmitter {
     public logWarning(message: string){
         console.log(chalk.yellow("[!]" + message));
     }
+
+    public logError(message: string){
+        console.log(chalk.redBright("[x]" + message));
+    }
+
+    public logDebug(message: string){
+        console.log(chalk.cyan("[debug]" + message));
+    }
 }
 
+export default new ClientEmitter();

@@ -59,7 +59,7 @@ export const Intercept = { // Intercept the requests and responses and route the
         E404: {
             path: "",
             res: (req: express.Request, response: express.Response | null): void => {
-                Emitter.emit("errors", req.header('x-forwarded-for') || req.connection.remoteAddress)
+                Emitter.emit("error", req.header('x-forwarded-for') || req.connection.remoteAddress)
                 response == null ? new Error("Unauthorized function manipulation") : 
                 response.json({
                     status: "Error",

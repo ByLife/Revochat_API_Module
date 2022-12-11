@@ -1,21 +1,22 @@
 import express from "express"
 import { Intercept } from "./response.routers";
 import chalk from "chalk"
+import http from "http"
 
 import Emitter from "../client/client.emitter"
 
 export class Routers  {
     protected app: express.Express;
     protected port: number;
+    protected server: http.Server;
 
     constructor(){
         this.port = 3000
         this.app = express()
         this.start()
-
-        this.app.listen(this.port, () => {
-            console.log(chalk.green(`Server is running on port ${this.port}`))
-        })
+        this.app.listen(this.port, () => { console.log("Server is running") })
+        this.server = http.createServer(this.app)
+        console.log(chalk.green(`[+] Server is running on port ${this.port}`))
     }
 
     iterate = (obj: any, path: string = ""): void => {
@@ -25,14 +26,23 @@ export class Routers  {
             if (typeof obj[key] === 'object' && obj[key] !== null) {
                 this.iterate(obj[key], path)
             } else if (typeof obj[key] === 'function'){ 
-                if(path.includes("*")) this.app.get("*", obj[key]) , Emitter.emit("loadRoute", "*", obj[key])
+                if(path.includes("*")) path = "*"
                 else this.app.get(path, obj[key]) , Emitter.emit("loadRoute", `${path}`, obj[key])
             }
         })
     }
 
-    public async start() {
-        await this.iterate(Intercept)
-         Emitter.emit("readyRoute", this)
+    public start() {
+        this.iterate(Intercept)
+        Emitter.emit("readyRoute", this)
+    }
+
+    public reload(){
+        this.server.close()
+        this.start()
+    }
+
+    public stop(){
+        this.server.close()
     }
 }
