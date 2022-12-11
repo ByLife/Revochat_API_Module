@@ -45,21 +45,17 @@ export interface Routes extends Array<Route>{}
 export const RouteResponse = new class RouteResponse implements InterceptRoute {
     public status!: Status
     public message!: string
-    public data?: InterceptRoute_Channel | InterceptRoute_Connect | InterceptRoute_Error | InterceptRoute_Messages | undefined
-
-    setStatus(status: Status) {
+    public data?: InterceptRoute_Channel | InterceptRoute_Connect | InterceptRoute_Error | InterceptRoute_Messages
+    setStatus(status: Status): this {
         this.status = status
         return this
     }
-
-    setMessage(message: string) {
+    setMessage(message: string): this {
         this.message = message
         return this
     }
-
-    setData(data: InterceptRoute_Channel | InterceptRoute_Connect | InterceptRoute_Error | InterceptRoute_Messages) {
+    setData(data: InterceptRoute_Channel | InterceptRoute_Connect | InterceptRoute_Error | InterceptRoute_Messages): this {
         this.data = data
         return this
     }
-    
 }

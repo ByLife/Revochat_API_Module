@@ -9,10 +9,14 @@ API.on("ready", (client: ClientEvents, routes: Routers, database: DB_Modal) => {
     console.log("danhzadh")
 })
 
+API.on("readyRoute", () => {
+    console.log("readyRoute")
+})
+
 API.on("error", (error: Error | string) => {
     console.log(error)
 })
 
-API.on("loadRoute", (path: string, callback: Function) => {
+API.on("loadRoute", (path: string) => {
     console.log(`[+] Loaded route: ${path}`)
 })
