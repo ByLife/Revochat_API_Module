@@ -18,3 +18,19 @@ revochat.fr/api/
    -> /messages/{id}
    -> /
 
+
+---------------
+
+EMITTERS: 
+
+ ROUTERS:
+
+- readyRoute (route, params) -> when all the routes are ready
+- loadRoute (route, params) -> when the routes are loading
+
+REQUESTS:
+
+- errors (errors) -> when there is an error
+- channel (token) -> when request a channel
+- messages (publicAddress) -> when a message is sent to someone ( /!\ CAN'T INTERCEPT THE MESSAGE /!\ )
+

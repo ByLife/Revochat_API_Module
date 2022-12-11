@@ -1,4 +1,4 @@
-import { UserInterface } from "../client/client.interface";
+import { UserInterface } from "../client/";
 import { DB_Modal } from "./model.database";
 
 export class DB_Manager extends DB_Modal {

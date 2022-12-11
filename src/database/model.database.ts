@@ -1,7 +1,7 @@
 import { Database } from "sqlite3";
 import { I_Database_Table } from "./interface.database"
-import chalk from "chalk";
-import { UserInterface } from "../client/client.interface";
+
+
 const Config = require("./../config/config.json")
 
 export class DB_Modal {
@@ -9,15 +9,7 @@ export class DB_Modal {
     private db_name: string = Config.database_name ;
     constructor() {
         this.db = new Database(`${this.db_name}.db`);
-        this.logSuccess(`Database ${this.db_name} created`);
-    }
-
-    public logSuccess(message: string){
-        console.log(chalk.green("[+]" + message));
-    }
-
-    public logFailed(message: string){
-        console.log(chalk.red("[-]" + message));
+        //Emitter.emit("databaseReady", `Database ${this.db_name} created`);
     }
 
     public getDB(): Database {
@@ -30,7 +22,7 @@ export class DB_Modal {
 
     public createTable(table_name: string, table_properties: Object): void {
         this.db.run(`CREATE TABLE IF NOT EXISTS ${table_name} (${table_properties})`);
-        this.logSuccess(`Table ${table_name} created`);
+        //Emitter.logSuccess(`Table ${table_name} created`);
     }
 
     public insert(table_name: string, table_properties: Object): void {
@@ -48,8 +40,8 @@ export class DB_Modal {
                     if(column.type == "INTEGER" || column.type == "REAL" || column.type == "DATE") properties += ` ${column.type}`;
                     else if(column.type == "TEXT" && column.length) properties += ` VARCHAR(${column.length})`;
                     else properties += ` TEXT NOT NULL`;
-                    // if(column.primary) properties += ` PRIMARY KEY`;
-                    // if(column.autoincrement) properties += ` AUTOINCREMENT`;
+                    if(column.primary) properties += ` PRIMARY KEY`;
+                    if(column.autoincrement) properties += ` AUTOINCREMENT`;
                     properties += `, `;
                 }
             })
