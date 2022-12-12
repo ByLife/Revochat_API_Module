@@ -1,22 +1,13 @@
-import API, { DB_Modal, Intercept, RevoAPI } from "./src";
-import { ClientEvents } from "./src/client/client.emitter";
-import { Routers } from "./src/routers/class.routers";
+import Client, { ClientEvents, RouterInterface, DatabaseInterface} from "./src";
 
-RevoAPI.routes.iterate(Intercept)
-
-API.on("ready", (client: ClientEvents, routes: Routers, database: DB_Modal) => {
-    client.logSuccess("API is ready!")
-    console.log("danhzadh")
+Client.on("ready", (routes: RouterInterface, database: DatabaseInterface) => {
+    routes.reload()
 })
 
-API.on("readyRoute", () => {
-    console.log("readyRoute")
-})
-
-API.on("error", (error: Error | string) => {
+Client.on("error", (error: Error | string) => {
     console.log(error)
 })
 
-API.on("loadRoute", (path: string) => {
-    console.log(`[+] Loaded route: ${path}`)
+Client.on("connect", (client: ClientEvents) => {
+    console.log("connect")
 })

@@ -1,3 +1,6 @@
+import express from 'express'
+import { Server } from 'http'
+
 export enum Status {
     'success' = 'success',
     'error' = 'error',
@@ -58,4 +61,11 @@ export const RouteResponse = new class RouteResponse implements InterceptRoute {
         this.data = data
         return this
     }
+}
+
+export interface RouterInterface {
+    iterate: (obj: any, path?: string) => void;
+    start: () => void;
+    reload: () => void;
+    stop: () => void;
 }

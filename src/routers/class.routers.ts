@@ -1,21 +1,21 @@
 import express from "express"
 import { Intercept } from "./response.routers";
-import chalk from "chalk"
 import { Server } from "http"
 
 import Emitter from "../client/client.emitter"
+import { RouterInterface } from "./interfaces.routers";
+import { config } from "../config";
 
-export class Routers  {
+export default new class Routers implements RouterInterface {
     protected app: express.Express;
     protected port: number;
     protected server: Server;
 
     constructor(){
-        this.port = 3000
+        this.port = config.properties.port
         this.app = express()
         this.start()
-        this.server = this.app.listen(this.port, () => { console.log("Server is running") })
-        console.log(chalk.green(`[+] Server is running on port ${this.port}`))
+        this.server = this.app.listen(this.port)
     }
 
     iterate = (obj: any, path: string = ""): void => {
@@ -38,7 +38,7 @@ export class Routers  {
 
     public reload(){
         this.server.close()
-        this.start()
+        this.server = this.app.listen(this.port)
     }
 
     public stop(){
