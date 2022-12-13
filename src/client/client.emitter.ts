@@ -35,4 +35,4 @@ export class ClientEmitter extends EventEmitter {
     }
 }
 
-export default new ClientEmitter();
+export default new ClientEmitter(); // Global Event Emitter

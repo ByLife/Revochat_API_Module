@@ -2,7 +2,7 @@ import express from "express"
 import Emitter from "../client/client.emitter"
 import {InterceptRoute, RouteResponse, Status} from "./"
 
-export const Intercept = { // Intercept the requests and responses and route them to the right function
+export const Intercept = { // Intercept the requests and responses and route them to the right function, this is the main router and all the other routers are children of this router
     path: "/api",
 
     // CLIENT SIDE ROUTES
@@ -56,14 +56,31 @@ export const Intercept = { // Intercept the requests and responses and route the
         },
     },
 
-    // ERROR HANDLER OF WRONG ROUTES
+
+    Admin : {
+        path: "/admin",
+
+        Users: {
+            path: "/users",
+            res: (req: express.Request, res: express.Response): void => {
+                Emitter.emit("admin", "users")
+                res.json(
+                    RouteResponse
+                        .setStatus(Status.success)
+                        .setMessage("You are in the admin panel")
+                )
+            }
+        }
+    },
+
+    // ERROR HANDLER OF WRONG ROUTES // PATH * ALWAYS AT THE END
 
     Errors : {
         path: "*",
         E404: {
             path: "",
             res: (req: express.Request, response: express.Response | null): void => {
-                Emitter.emit("error", req.header('x-forwarded-for') || req.connection.remoteAddress)
+                // Emitter.emit("error", req.header('x-forwarded-for') || req.connection.remoteAddress)
                 response == null ? new Error("Unauthorized function manipulation") : 
                 response.json(
                     RouteResponse
@@ -73,6 +90,5 @@ export const Intercept = { // Intercept the requests and responses and route the
             }
         }
     }
-
     
 }

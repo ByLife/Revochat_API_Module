@@ -1,7 +1,7 @@
 import { UserInterface } from "../client/";
 import { DB_Modal } from "./model.database";
 
-export class DB_Manager extends DB_Modal {
+export class DB_Manager extends DB_Modal { // This is the class for the database manager
     constructor() {
         super();
         this.createTableFromConfig()

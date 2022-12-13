@@ -14,5 +14,5 @@ export default Client
 
 setTimeout(() => {
     Client.emit("ready", Routers, RevoDB)
-}, config.properties.readyEventTimeout)
+}, 2000)
 

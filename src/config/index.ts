@@ -1,6 +1,6 @@
 export default "./database.json"
 
-export const config = {
+export const config = { // This is the config file for the RevoAPI. You can change the port, the timeout, and the application name, version, description, and owners.
     application: {
         name: "RevoChat",
         version: "1.2.0",
@@ -17,6 +17,6 @@ export const config = {
 
     properties : {
         port: 3000,
-        readyEventTimeout: 3000,
+        readyEventTimeout: 5000,
     }
 }
