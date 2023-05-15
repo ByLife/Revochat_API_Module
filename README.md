@@ -1,3 +1,7 @@
-Moved to github.com/revochat
+# Table of content
 
-I use this repo as a backup
+- [Introduction](#introduction)
+
+## Introduction
+
+This project is now maintained in a organization. You can find it [here](https://github.com/revochat).
